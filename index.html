@@ -12,45 +12,52 @@
         <h1 class="text-2xl font-bold text-blue-900 mb-4">Portal SOP PT BAS</h1>
         
         <!-- Kotak Pencarian -->
-        <input type="text" id="searchInput" placeholder="Cari kata kunci (Contoh: lumpur, induksi, bahaya)..." onkeyup="searchSOP()"
+        <input type="text" id="searchInput" placeholder="Cari kata kunci (Contoh: lumpur, alat, shift, bahaya)..." onkeyup="searchSOP()"
                class="w-full p-3 border-2 border-blue-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none mb-4">
         
-        <!-- Daftar Dokumen & Isi Ringkasannya -->
+        <!-- Daftar Dokumen & Keyword Tersembunyi untuk Antisipasi Tes -->
         <div id="sopList" class="space-y-3">
             
-            <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-keywords="fatigue management 012 kelelahan tidur shift">
+            <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-keywords="fatigue management 012 kelelahan tidur shift jam kerja waktu istirahat kondisi fisik">
                 <a href="dokumen_sop/sop_Fatigue_Management_012.pdf" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Fatigue Management 012</a>
-                <p class="text-sm text-gray-600 mt-1">Prosedur pengelolaan kelelahan kerja, aturan jam tidur, dan pengawasan shift.</p>
+                <p class="text-sm bg-blue-50 text-blue-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">Fokus: Pengelolaan Kelelahan Kerja & Shift</p>
+                <p class="text-sm text-gray-600 mt-1">Aturan jam kerja, shift, dan pencegahan kelelahan fisik karyawan.</p>
             </div>
 
-            <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-keywords="identifikasi bahaya penilaian resiko 003 k3 safety">
+            <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-keywords="identifikasi bahaya penilaian resiko 003 k3 safety mitigasi kecelakaan kerja">
                 <a href="dokumen_sop/sop_Identifikasi_Bahaya_dan_Penilaian Resiko_003.pdf" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Identifikasi Bahaya dan Penilaian Resiko 003</a>
-                <p class="text-sm text-gray-600 mt-1">Panduan mengenali potensi bahaya di lapangan serta cara menilai tingkat resiko.</p>
+                <p class="text-sm bg-blue-50 text-blue-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">Fokus: Penilaian Resiko K3 & Safety</p>
+                <p class="text-sm text-gray-600 mt-1">Panduan mengenali potensi bahaya dan tingkat resiko di lapangan.</p>
             </div>
 
-            <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-keywords="induksi 001 kumpul karyawan baru safety induction">
+            <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-keywords="induksi 001 kumpul karyawan baru safety induction tamu pengenalan area">
                 <a href="dokumen_sop/sop_induksi_001.pdf" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Induksi 001</a>
-                <p class="text-sm text-gray-600 mt-1">Tata cara pengenalan keselamatan kerja bagi pekerja baru atau tamu.</p>
+                <p class="text-sm bg-blue-50 text-blue-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">Fokus: Induksi Karyawan Baru & Tamu</p>
+                <p class="text-sm text-gray-600 mt-1">Tata cara pengenalan awal keselamatan kerja.</p>
             </div>
 
-            <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-keywords="inspeksi keselamatan 020 cek unit alat kelayakan">
+            <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-keywords="inspeksi keselamatan 020 cek unit alat kelayakan pemeriksaan rutin area kerja">
                 <a href="dokumen_sop/sop_inspeksi_keselamatan_020.pdf" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Inspeksi Keselamatan 020</a>
-                <p class="text-sm text-gray-600 mt-1">Pemeriksaan berkala kondisi area kerja, alat, dan kelayakan operasional.</p>
+                <p class="text-sm bg-blue-50 text-blue-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">Fokus: Inspeksi Lapangan & Kelayakan Alat</p>
+                <p class="text-sm text-gray-600 mt-1">Pemeriksaan berkala kondisi area kerja dan unit operasional.</p>
             </div>
 
-            <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-keywords="job safety analysis 006 jsa kerja aman">
+            <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-keywords="job safety analysis 006 jsa kerja aman langkah mitigasi prosedur tugas">
                 <a href="dokumen_sop/sop_Job_Safety_Analysis_006.pdf" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Job Safety Analysis 006</a>
-                <p class="text-sm text-gray-600 mt-1">Analisis keselamatan kerja untuk memetakan langkah kerja dan mitigasi bahaya.</p>
+                <p class="text-sm bg-blue-50 text-blue-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">Fokus: Analisis Keselamatan Kerja (JSA)</p>
+                <p class="text-sm text-gray-600 mt-1">Memetakan langkah kerja aman dan mitigasi bahaya spesifik.</p>
             </div>
 
-            <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-keywords="mining service 005 lumpur sump disposal tambang">
+            <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-keywords="mining service 005 lumpur sump disposal tambang pemompaan air material over burden">
                 <a href="dokumen_sop/sop_Mining_Service_005.pdf" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Mining Service 005</a>
-                <p class="text-sm text-gray-600 mt-1">Panduan layanan penambangan, pengelolaan sump, penempatan material, dan pemompaan lumpur.</p>
+                <p class="text-sm bg-blue-50 text-blue-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">Fokus: Layanan Penambangan & Sump/Lumpur (Hal. 4 & 17)</p>
+                <p class="text-sm text-gray-600 mt-1">Panduan layanan penambangan, pengelolaan sump, dan pemompaan lumpur.</p>
             </div>
 
-            <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-keywords="pelaporan bahaya 002 insiden near miss">
+            <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-keywords="pelaporan bahaya 002 insiden near miss kejadian hampir celaka lapor temuan">
                 <a href="dokumen_sop/sop_Pelaporan_Bahaya_002.pdf" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Pelaporan Bahaya 002</a>
-                <p class="text-sm text-gray-600 mt-1">Mekanisme pelaporan temuan bahaya atau kejadian nyaris celaka (near miss).</p>
+                <p class="text-sm bg-blue-50 text-blue-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">Fokus: Pelaporan Insiden & Near Miss</p>
+                <p class="text-sm text-gray-600 mt-1">Mekanisme pelaporan temuan bahaya atau kejadian nyaris celaka.</p>
             </div>
 
         </div>
@@ -66,7 +73,6 @@
                 let desc = items[i].getElementsByTagName('p')[0].innerText.toLowerCase();
                 let keywords = items[i].getAttribute('data-keywords').toLowerCase();
 
-                // Jika kata yang diketik ada di judul, deskripsi, atau kata kunci tersembunyi
                 if (title.includes(input) || desc.includes(input) || keywords.includes(input)) {
                     items[i].style.display = "";
                 } else {
