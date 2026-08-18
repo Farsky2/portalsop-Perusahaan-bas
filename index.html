@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal SOP PT BAS - Full PDF Reader</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Memuat PDF.js untuk membaca isi teks PDF langsung di browser -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
@@ -29,7 +28,6 @@
     </div>
 
     <script>
-        // Daftar file PDF SOP Anda
         const sopFiles = [
             { judul: 'SOP Fatigue Management 012', file: 'dokumen_sop/sop_Fatigue_Management_012.pdf' },
             { judul: 'SOP Identifikasi Bahaya dan Penilaian Resiko 003', file: 'dokumen_sop/sop_Identifikasi_Bahaya_dan_Penilaian Resiko_003.pdf' },
@@ -42,7 +40,6 @@
 
         let parsedData = [];
 
-        // Fungsi untuk membaca seluruh teks dari file PDF secara otomatis per halaman
         async function loadAndExtractPDFs() {
             for (let sop of sopFiles) {
                 try {
@@ -68,7 +65,7 @@
 
             document.getElementById('statusMsg').innerText = "✅ Semua dokumen berhasil dibaca dan dianalisis!";
             document.getElementById('searchInput').removeAttribute('disabled');
-            displayDefault();
+            document.getElementById('searchInput').focus();
         }
 
         loadAndExtractPDFs();
@@ -76,21 +73,12 @@
         const input = document.getElementById('searchInput');
         const list = document.getElementById('resultsList');
 
-        function displayDefault() {
-            list.innerHTML = '<p class="text-gray-500 text-center py-4">Silakan ketik kata kunci di atas untuk mencari isi dokumen secara spesifik.</p>';
-        }
-
-        // Event saat mengetik pencarian
         input.addEventListener('input', (e) => {
             const query = e.target.value.toLowerCase().trim();
             list.innerHTML = '';
 
-            if (query === '') {
-                displayDefault();
-                return;
-            }
+            if (query === '') return;
 
-            // Filter teks dari seluruh halaman PDF yang cocok dengan kata kunci
             const matches = parsedData.filter(item => item.teks.toLowerCase().includes(query));
 
             if (matches.length === 0) {
@@ -98,15 +86,27 @@
                 return;
             }
 
-            // Batasi tampilan maksimal 10 hasil agar tidak terlalu panjang di HP
-            matches.slice(0, 10).forEach(match => {
+            matches.slice(0, 15).forEach(match => {
                 const card = document.createElement('div');
                 card.className = "bg-white p-4 rounded-lg shadow border border-gray-100 transition hover:shadow-md";
                 
+                // Ambil cuplikan teks di sekitar kata kunci (Snippet Extraction)
+                const lowerTeks = match.teks.toLowerCase();
+                const index = lowerTeks.indexOf(query);
+                let start = Math.max(0, index - 80);
+                let end = Math.min(match.teks.length, index + query.length + 120);
+                let snippet = match.teks.substring(start, end);
+                if (start > 0) snippet = "..." + snippet;
+                if (end < match.teks.length) snippet = snippet + "...";
+
+                // Berikan efek highlight kuning (<mark>) pada kata kunci
+                const regex = new RegExp(`(${query})`, 'gi');
+                const highlightedSnippet = snippet.replace(regex, '<mark>$1</mark>');
+
                 card.innerHTML = `
                     <a href="${match.file}#page=${match.halaman}" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">${match.judul}</a>
                     <p class="text-sm bg-yellow-100 text-yellow-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">📍 Ditemukan di Halaman ${match.halaman}</p>
-                    <p class="text-sm text-gray-600 mt-1 line-clamp-2">...</p>
+                    <p class="text-sm text-gray-700 mt-2 italic bg-gray-50 p-2 rounded border border-gray-100">"${highlightedSnippet}"</p>
                 `;
                 list.appendChild(card);
             });
