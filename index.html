@@ -12,51 +12,55 @@
         <h1 class="text-2xl font-bold text-blue-900 mb-4">Portal SOP PT BAS</h1>
         
         <!-- Kotak Pencarian -->
-        <input type="text" id="searchInput" placeholder="Cari keyword apa saja (Contoh: jalan, apd, lumpur, shift)..." onkeyup="searchSOP()"
+        <input type="text" id="searchInput" placeholder="Cari keyword (Contoh: lumpur, jalan, apd, shift)..." onkeyup="searchSOP()"
                class="w-full p-3 border-2 border-blue-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none mb-4">
         
-        <!-- Daftar Dokumen SOP -->
+        <!-- Daftar Dokumen SOP dengan Target Halaman Otomatis -->
         <div id="sopList" class="space-y-3">
             
             <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-text="sop fatigue management 012 kelelahan tidur shift jam kerja waktu istirahat kondisi fisik pengawasan driver operator tambang">
-                <a href="dokumen_sop/sop_Fatigue_Management_012.pdf" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Fatigue Management 012</a>
-                <p class="text-sm bg-blue-50 text-blue-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">Fokus: Pengelolaan Kelelahan Kerja & Shift</p>
+                <!-- Langsung diarahkan ke halaman 3 saat diklik -->
+                <a href="dokumen_sop/sop_Fatigue_Management_012.pdf#page=3" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Fatigue Management 012</a>
+                <p class="text-sm bg-yellow-100 text-yellow-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">📍 Langsung ke Halaman 3 (Shift & Kelelahan)</p>
                 <p class="text-sm text-gray-600 mt-1">Aturan jam kerja, shift, dan pencegahan kelelahan fisik karyawan.</p>
             </div>
 
             <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-text="sop identifikasi bahaya dan penilaian resiko 003 k3 safety mitigasi kecelakaan kerja alat pelindung diri apd bahaya risiko lingkungan kerja">
-                <a href="dokumen_sop/sop_Identifikasi_Bahaya_dan_Penilaian Resiko_003.pdf" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Identifikasi Bahaya dan Penilaian Resiko 003</a>
-                <p class="text-sm bg-blue-50 text-blue-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">Fokus: Penilaian Resiko K3 & Safety</p>
+                <!-- Langsung diarahkan ke halaman 2 saat diklik -->
+                <a href="dokumen_sop/sop_Identifikasi_Bahaya_dan_Penilaian Resiko_003.pdf#page=2" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Identifikasi Bahaya dan Penilaian Resiko 003</a>
+                <p class="text-sm bg-yellow-100 text-yellow-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">📍 Langsung ke Halaman 2 (APD & Penilaian)</p>
                 <p class="text-sm text-gray-600 mt-1">Panduan mengenali potensi bahaya, APD, dan tingkat resiko di lapangan.</p>
             </div>
 
             <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-text="sop induksi 001 kumpul karyawan baru safety induction tamu pengenalan area kerja site tambang aturan umum">
-                <a href="dokumen_sop/sop_induksi_001.pdf" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Induksi 001</a>
-                <p class="text-sm bg-blue-50 text-blue-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">Fokus: Induksi Karyawan Baru & Tamu</p>
+                <a href="dokumen_sop/sop_induksi_001.pdf#page=1" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Induksi 001</a>
+                <p class="text-sm bg-yellow-100 text-yellow-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">📍 Langsung ke Halaman 1 (Pengenalan Area)</p>
                 <p class="text-sm text-gray-600 mt-1">Tata cara pengenalan awal keselamatan kerja.</p>
             </div>
 
             <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-text="sop inspeksi keselamatan 020 cek unit alat kelayakan pemeriksaan rutin area kerja jalan tambang hauling periksa mesin">
-                <a href="dokumen_sop/sop_inspeksi_keselamatan_020.pdf" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Inspeksi Keselamatan 020</a>
-                <p class="text-sm bg-blue-50 text-blue-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">Fokus: Inspeksi Lapangan & Kelayakan Alat</p>
+                <!-- Langsung diarahkan ke halaman 4 saat diklik -->
+                <a href="dokumen_sop/sop_inspeksi_keselamatan_020.pdf#page=4" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Inspeksi Keselamatan 020</a>
+                <p class="text-sm bg-yellow-100 text-yellow-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">📍 Langsung ke Halaman 4 (Inspeksi Jalan & Unit)</p>
                 <p class="text-sm text-gray-600 mt-1">Pemeriksaan berkala kondisi area kerja, jalan, dan unit operasional.</p>
             </div>
 
             <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-text="sop job safety analysis 006 jsa kerja aman langkah mitigasi prosedur tugas analisis bahaya pekerjaan">
-                <a href="dokumen_sop/sop_Job_Safety_Analysis_006.pdf" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Job Safety Analysis 006</a>
-                <p class="text-sm bg-blue-50 text-blue-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">Fokus: Analisis Keselamatan Kerja (JSA)</p>
+                <a href="dokumen_sop/sop_Job_Safety_Analysis_006.pdf#page=2" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Job Safety Analysis 006</a>
+                <p class="text-sm bg-yellow-100 text-yellow-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">📍 Langsung ke Halaman 2 (Langkah JSA)</p>
                 <p class="text-sm text-gray-600 mt-1">Memetakan langkah kerja aman dan mitigasi bahaya spesifik.</p>
             </div>
 
             <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-text="sop mining service 005 lumpur sump disposal tambang pemompaan air material over burden jalan hauling layanan tambang pit">
-                <a href="dokumen_sop/sop_Mining_Service_005.pdf" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Mining Service 005</a>
-                <p class="text-sm bg-blue-50 text-blue-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">Fokus: Layanan Penambangan & Sump/Lumpur (Hal. 4 & 17)</p>
+                <!-- Langsung diarahkan ke halaman 17 (pas kasus lumpur/jalan) saat diklik -->
+                <a href="dokumen_sop/sop_Mining_Service_005.pdf#page=17" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Mining Service 005</a>
+                <p class="text-sm bg-yellow-100 text-yellow-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">📍 Langsung ke Halaman 17 (Sump, Lumpur & Jalan)</p>
                 <p class="text-sm text-gray-600 mt-1">Panduan layanan penambangan, pengelolaan sump, jalan, dan pemompaan lumpur.</p>
             </div>
 
             <div class="sop-item bg-white p-4 rounded-lg shadow border border-gray-100" data-text="sop pelaporan bahaya 002 insiden near miss kejadian hampir celaka lapor temuan bahaya form pelaporan">
-                <a href="dokumen_sop/sop_Pelaporan_Bahaya_002.pdf" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Pelaporan Bahaya 002</a>
-                <p class="text-sm bg-blue-50 text-blue-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">Fokus: Pelaporan Insiden & Near Miss</p>
+                <a href="dokumen_sop/sop_Pelaporan_Bahaya_002.pdf#page=2" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">SOP Pelaporan Bahaya 002</a>
+                <p class="text-sm bg-yellow-100 text-yellow-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">📍 Langsung ke Halaman 2 (Mekanisme Lapor)</p>
                 <p class="text-sm text-gray-600 mt-1">Mekanisme pelaporan temuan bahaya atau kejadian nyaris celaka.</p>
             </div>
 
@@ -69,7 +73,6 @@
             let items = document.getElementsByClassName('sop-item');
 
             for (let i = 0; i < items.length; i++) {
-                // Memindai seluruh teks yang ada di kartu DAN atribut data-text secara bersamaan
                 let fullText = items[i].innerText.toLowerCase() + " " + items[i].getAttribute('data-text').toLowerCase();
 
                 if (fullText.includes(input)) {
