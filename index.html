@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal SOP PT BAS - MiniSearch</title>
+    <title>Portal SOP PT BAS - Full PDF Reader</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Memuat MiniSearch Library secara langsung dari CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/minisearch@7.1.1/dist/umd/index.min.js"></script>
+    <!-- Memuat PDF.js untuk membaca isi teks PDF langsung di browser -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
     <style>
         mark { background-color: #fde047; padding: 0 2px; border-radius: 4px; font-weight: bold; }
     </style>
@@ -14,142 +17,98 @@
 <body class="bg-gray-50 p-4">
 
     <div class="max-w-2xl mx-auto">
-        <h1 class="text-2xl font-bold text-blue-900 mb-4">Portal SOP PT BAS (Smart Search)</h1>
+        <h1 class="text-2xl font-bold text-blue-900 mb-2">Portal SOP PT BAS</h1>
+        <p id="statusMsg" class="text-xs text-gray-500 mb-4">⏳ Memuat dan membaca isi dokumen PDF...</p>
         
-        <!-- Kotak Pencarian Ala Meilisearch -->
-        <input type="text" id="searchInput" placeholder="Cari keyword bebas (Contoh: penyebab fatigue, jalan, apd)..." 
-               class="w-full p-3 border-2 border-blue-500 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none mb-4 shadow-sm">
+        <!-- Kotak Pencarian -->
+        <input type="text" id="searchInput" placeholder="Ketik kata apa saja (cth: lumpur, jalan, fatigue, apd)..." 
+               class="w-full p-3 border-2 border-blue-500 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none mb-4 shadow-sm" disabled>
         
-        <!-- Area Hasil Pencarian -->
+        <!-- Hasil Pencarian -->
         <div id="resultsList" class="space-y-3"></div>
     </div>
 
     <script>
-        // 1. Data Dokumen SOP lengkap dengan isi teks/keterangannya
-        const documents = [
-            {
-                id: '1',
-                judul: 'SOP Fatigue Management 012',
-                file: 'dokumen_sop/sop_Fatigue_Management_012.pdf',
-                halaman: '3',
-                kategori: 'Pengelolaan Kelelahan Kerja & Shift',
-                teks: 'Panduan lengkap penyebab kelelahan, faktor pemicu fatigue, aturan jam kerja, shift, waktu istirahat, dan pencegahan kondisi fisik pengawasan driver operator tambang.'
-            },
-            {
-                id: '2',
-                judul: 'SOP Identifikasi Bahaya dan Penilaian Resiko 003',
-                file: 'dokumen_sop/sop_Identifikasi_Bahaya_dan_Penilaian Resiko_003.pdf',
-                halaman: '2',
-                kategori: 'Penilaian Resiko K3 & Safety',
-                teks: 'Panduan mengenali potensi bahaya, alat pelindung diri apd, mitigasi kecelakaan kerja, dan tingkat resiko di lingkungan kerja lapangan.'
-            },
-            {
-                id: '3',
-                judul: 'SOP Induksi 001',
-                file: 'dokumen_sop/sop_induksi_001.pdf',
-                halaman: '1',
-                kategori: 'Induksi Karyawan Baru & Tamu',
-                teks: 'Tata cara pengenalan awal keselamatan kerja, kumpul karyawan baru, safety induction, tamu, dan pengenalan area kerja site tambang aturan umum.'
-            },
-            {
-                id: '4',
-                judul: 'SOP Inspeksi Keselamatan 020',
-                file: 'dokumen_sop/sop_inspeksi_keselamatan_020.pdf',
-                halaman: '4',
-                kategori: 'Inspeksi Lapangan & Kelayakan Alat',
-                teks: 'Pemeriksaan berkala kondisi area kerja, jalan tambang, hauling, cek unit alat, kelayakan, dan periksa mesin operasional.'
-            },
-            {
-                id: '5',
-                judul: 'SOP Job Safety Analysis 006',
-                file: 'dokumen_sop/sop_Job_Safety_Analysis_006.pdf',
-                halaman: '2',
-                kategori: 'Analisis Keselamatan Kerja (JSA)',
-                teks: 'Memetakan langkah kerja aman, jsa, mitigasi bahaya spesifik, dan analisis prosedur tugas pekerjaan.'
-            },
-            {
-                id: '6',
-                judul: 'SOP Mining Service 005',
-                file: 'dokumen_sop/sop_Mining_Service_005.pdf',
-                halaman: '17',
-                kategori: 'Layanan Penambangan & Sump/Lumpur',
-                teks: 'Panduan layanan penambangan, pengelolaan sump, lumpur, disposal tambang, pemompaan air, material over burden, jalan hauling pit.'
-            },
-            {
-                id: '7',
-                judul: 'SOP Pelaporan Bahaya 002',
-                file: 'dokumen_sop/sop_Pelaporan_Bahaya_002.pdf',
-                halaman: '2',
-                kategori: 'Pelaporan Insiden & Near Miss',
-                teks: 'Mekanisme pelaporan temuan bahaya, insiden, near miss, kejadian hampir celaka, dan form pelaporan.'
-            }
+        // Daftar file PDF SOP Anda
+        const sopFiles = [
+            { judul: 'SOP Fatigue Management 012', file: 'dokumen_sop/sop_Fatigue_Management_012.pdf' },
+            { judul: 'SOP Identifikasi Bahaya dan Penilaian Resiko 003', file: 'dokumen_sop/sop_Identifikasi_Bahaya_dan_Penilaian Resiko_003.pdf' },
+            { judul: 'SOP Induksi 001', file: 'dokumen_sop/sop_induksi_001.pdf' },
+            { judul: 'SOP Inspeksi Keselamatan 020', file: 'dokumen_sop/sop_inspeksi_keselamatan_020.pdf' },
+            { judul: 'SOP Job Safety Analysis 006', file: 'dokumen_sop/sop_Job_Safety_Analysis_006.pdf' },
+            { judul: 'SOP Mining Service 005', file: 'dokumen_sop/sop_Mining_Service_005.pdf' },
+            { judul: 'SOP Pelaporan Bahaya 002', file: 'dokumen_sop/sop_Pelaporan_Bahaya_002.pdf' }
         ];
 
-        // 2. Inisialisasi MiniSearch (Mesin pencarian mirip Meilisearch di dalam browser)
-        let miniSearch = new MiniSearch({
-            fields: ['judul', 'kategori', 'teks'], // Field yang akan dicari
-            storeFields: ['judul', 'file', 'halaman', 'kategori', 'teks']
-        });
+        let parsedData = [];
 
-        // Masukkan data dokumen ke mesin pencari
-        miniSearch.addAll(documents);
+        // Fungsi untuk membaca seluruh teks dari file PDF secara otomatis per halaman
+        async function loadAndExtractPDFs() {
+            for (let sop of sopFiles) {
+                try {
+                    const loadingTask = pdfjsLib.getDocument(sop.file);
+                    const pdf = await loadingTask.promise;
+                    
+                    for (let i = 1; i <= pdf.numPages; i++) {
+                        const page = await pdf.getPage(i);
+                        const textContent = await page.getTextContent();
+                        let pageText = textContent.items.map(item => item.str).join(' ');
+                        
+                        parsedData.push({
+                            judul: sop.judul,
+                            file: sop.file,
+                            halaman: i,
+                            teks: pageText
+                        });
+                    }
+                } catch (error) {
+                    console.error("Gagal membaca file: " + sop.file, error);
+                }
+            }
+
+            document.getElementById('statusMsg').innerText = "✅ Semua dokumen berhasil dibaca dan dianalisis!";
+            document.getElementById('searchInput').removeAttribute('disabled');
+            displayDefault();
+        }
+
+        loadAndExtractPDFs();
 
         const input = document.getElementById('searchInput');
         const list = document.getElementById('resultsList');
 
-        // Fungsi untuk menampilkan semua dokumen secara default saat halaman dibuka
-        function displayAll() {
-            list.innerHTML = '';
-            documents.forEach(doc => {
-                renderCard(doc, '');
-            });
+        function displayDefault() {
+            list.innerHTML = '<p class="text-gray-500 text-center py-4">Silakan ketik kata kunci di atas untuk mencari isi dokumen secara spesifik.</p>';
         }
 
-        function renderCard(doc, query) {
-            const card = document.createElement('div');
-            card.className = "bg-white p-4 rounded-lg shadow border border-gray-100 transition hover:shadow-md";
-            
-            // Highlight teks sederhana jika ada query pencarian
-            let highlightedText = doc.teks;
-            if (query) {
-                const regex = new RegExp(`(${query})`, 'gi');
-                highlightedText = doc.teks.replace(regex, '<mark>$1</mark>');
-            }
-
-            card.innerHTML = `
-                <a href="${doc.file}#page=${doc.halaman}" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">${doc.judul}</a>
-                <p class="text-sm bg-yellow-100 text-yellow-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">📍 Langsung ke Halaman ${doc.halaman} (${doc.kategori})</p>
-                <p class="text-sm text-gray-600 mt-1">${highlightedText}</p>
-            `;
-            list.appendChild(card);
-        }
-
-        // Tampilkan semua data di awal
-        displayAll();
-
-        // 3. Event Listener saat mengetik di kotak pencarian (Pencarian Real-time Canggih)
+        // Event saat mengetik pencarian
         input.addEventListener('input', (e) => {
-            const query = e.target.value.trim();
+            const query = e.target.value.toLowerCase().trim();
             list.innerHTML = '';
 
             if (query === '') {
-                displayAll();
+                displayDefault();
                 return;
             }
 
-            // Cari menggunakan MiniSearch dengan toleransi typo (fuzzy search)
-            const results = miniSearch.search(query, { 
-                fuzzy: 0.2, // Memberikan toleransi salah ketik sedikit
-                prefix: true // Pencarian awalan kata
-            });
+            // Filter teks dari seluruh halaman PDF yang cocok dengan kata kunci
+            const matches = parsedData.filter(item => item.teks.toLowerCase().includes(query));
 
-            if (results.length === 0) {
-                list.innerHTML = `<p class="text-gray-500 text-center py-4">Tidak ada SOP yang cocok dengan kata kunci "<b>${query}</b>"</p>`;
+            if (matches.length === 0) {
+                list.innerHTML = `<p class="text-gray-500 text-center py-4">Tidak ditemukan kata "<b>${query}</b>" di dalam dokumen.</p>`;
                 return;
             }
 
-            results.forEach(result => {
-                renderCard(result, query);
+            // Batasi tampilan maksimal 10 hasil agar tidak terlalu panjang di HP
+            matches.slice(0, 10).forEach(match => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-4 rounded-lg shadow border border-gray-100 transition hover:shadow-md";
+                
+                card.innerHTML = `
+                    <a href="${match.file}#page=${match.halaman}" target="_blank" class="font-bold text-blue-700 hover:underline block text-lg">${match.judul}</a>
+                    <p class="text-sm bg-yellow-100 text-yellow-800 inline-block px-2 py-0.5 rounded mt-1 font-semibold">📍 Ditemukan di Halaman ${match.halaman}</p>
+                    <p class="text-sm text-gray-600 mt-1 line-clamp-2">...</p>
+                `;
+                list.appendChild(card);
             });
         });
     </script>
